@@ -1,0 +1,35 @@
+.courseCardDiv{
+	border-style: solid;
+	border-color: green;
+	height: 250px;
+    margin-top: 40px;
+    margin-right: 40px;
+}
+.divContentLeft {
+    height: 75%;
+    float: left;
+    margin: 1%;
+    width: 50%;
+}
+.divContentCardRight {
+    height: 100%;
+    float: right;
+    margin: 0px 10px 0px 10px;
+}
+.cardElement {
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 0px 10px;
+    width: 500px;
+}
+.divCenter {
+    text-align: center;
+}
+
+h3{
+    margin-left: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+

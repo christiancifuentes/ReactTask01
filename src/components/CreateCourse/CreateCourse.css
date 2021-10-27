@@ -1,0 +1,40 @@
+
+.courseCreateStyle {
+    border-style: solid;
+    border-color: #0CB7F2;
+    height: 100%;
+}
+.divContentCourse {
+    height: 75%;
+    float: left;
+    margin: 1%
+}
+.hearderCenter {
+    text-align: center;
+}
+.divContentRightCourse {
+    height: 100%;
+    float: right;
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 0px 10px;
+}
+.textAreaStyleDiv{
+    margin-left: 40px;
+    margin-top: 20px;
+}
+.marginLeftDiv{
+    margin-left: 20px;
+}
+.authorBlackBorder{
+    border-style: solid;
+    border-color:black;
+    height: 500px;
+    margin: 20px;
+}
+.divContentRightAuthor {
+    width: 50%;
+    height: 100%;
+    float: right;
+}
+

@@ -1,0 +1,18 @@
+.headerStyle {
+    border-style: solid;
+    border-color: #FF7276;
+    height: 100px;
+    margin-bottom: 30px;
+}
+.divContent {
+    height: 75%;
+    float: left;
+    margin: 1%
+}
+.divContentRight {
+    height: 100%;
+    float: right;
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 0px 10px;
+}
