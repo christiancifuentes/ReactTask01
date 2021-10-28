@@ -27,7 +27,7 @@ const Courses = ({ stateChanger, newCourse }) => {
 			creationDate={course.creationDate}
 		></CourseCard>
 	));
-	const [courses, setCourses] = useState(listItems);
+	const [courses] = useState(listItems);
 	return (
 		<div className='courseStyle'>
 			<SearchBar />

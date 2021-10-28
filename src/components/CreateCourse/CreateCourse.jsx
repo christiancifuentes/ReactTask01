@@ -25,8 +25,8 @@ const textAreaStyle = {
 };
 
 const CreateCourse = ({ stateChanger }) => {
-	const [authorsToAdd, setauthorsToAdd] = useState(mockedAuthorsList);
-	const [authorsAdded, setauthorsAdded] = useState([]);
+	const [authorsToAdd] = useState(mockedAuthorsList);
+	const [authorsAdded] = useState([]);
 	const [inputAuthor, setinputAuthor] = useState('');
 	const [inputCourseName, setinputCourseName] = useState('');
 	const [inputCourseDes, setinputCourseDes] = useState('');
