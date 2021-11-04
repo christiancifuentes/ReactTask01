@@ -44,7 +44,7 @@
         },
       }).then((result) => {
           if(result.json().result){
-            alert('hola: '+result.json().result);
+            alert('hol: '+result.json().result);
             return false;
           }else{
             alert('ERROR');
