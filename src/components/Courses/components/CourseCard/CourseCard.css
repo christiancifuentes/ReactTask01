@@ -32,4 +32,16 @@ h3{
     white-space: nowrap;
     overflow: hidden;
 }
-
+.alignleft {
+    float: left;
+    width: 250px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+.alignright {
+    float: right;
+    margin-bottom: 25px;
+}
+.centerFullDiv{
+    height: 400px;
+}

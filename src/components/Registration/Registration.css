@@ -1,0 +1,19 @@
+.registrationDivStyle {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+}
+
+.inputCreateStyle {
+	width: 250px;
+	margin-top: 10px;
+    margin-bottom: 10px;
+	border: 2px solid orange;
+	height: 25px;
+};
+
+.divButtonStyle {
+    width: 100px;
+    align-self: center;
+}

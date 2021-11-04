@@ -3,6 +3,7 @@ import Button from '../../common/Button/Button';
 import TextArea from '../../common/TextArea/TextArea';
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { mockedAuthorsList } from '../Courses/components/Courses/mockedAuthorsList';
 
@@ -108,8 +109,6 @@ const CreateCourse = ({ stateChanger }) => {
 			duration: inputDuration,
 			authors: authorsAdded,
 		});
-		console.log(newCourse);
-		stateChanger('true');
 	}
 	function createAuthor() {
 		console.log(fullListItems);
@@ -233,7 +232,10 @@ const CreateCourse = ({ stateChanger }) => {
 					style={inputCreateStyle}
 					onChange={(event) => setinputCourseName(event.target.value)}
 				/>
-				<Button label='Create course' onClick={() => createCourse()} />
+				<Link to="/courses">
+					<Button label='Create course' onClick={() => createCourse()} />
+ 				</Link>
+				
 			</div>
 			<div className='textAreaStyleDiv'>
 				<TextArea

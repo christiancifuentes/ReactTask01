@@ -3,6 +3,7 @@ import CourseCard from '../CourseCard/CourseCard';
 import SearchBar from '../SearchBar/SearchBar';
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import './Courses.css';
 
@@ -31,7 +32,11 @@ const Courses = ({ stateChanger, newCourse }) => {
 	return (
 		<div className='courseStyle'>
 			<SearchBar />
-			<Button label='Add new course' onClick={() => stateChanger('false')} />
+			<Link to="/courses/add">
+				<Button label='Add new course'/>
+ 			</Link>
+	
+			
 			<ul>{courses}</ul>
 		</div>
 	);

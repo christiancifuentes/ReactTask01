@@ -1,15 +1,16 @@
 import React from 'react';
 
-const Input = ({ labelText, placeholder, onChange, name, id, style }) => (
+const Input = ({ labelText, placeholder, onChange, name, id, style, className, type}) => (
 	<>
 		<label for={labelText}>{labelText}</label>
 		<input
-			type='text'
+			className={className}
 			id={id}
 			name={name}
 			placeholder={placeholder}
 			style={style}
 			onChange={onChange}
+			type={type}
 		></input>
 	</>
 );

@@ -8,10 +8,11 @@ const buttonStyle = {
 	marginLeft: '10px',
 	height: '30px',
 	cursor: 'pointer',
+	marginTop: '5px'
 };
 
-const Button = ({ label, onClick }) => (
-	<button className='btn' style={buttonStyle} onClick={onClick}>
+const Button = ({ label, onClick, type }) => (
+	<button type={type} className='btn' style={buttonStyle} onClick={onClick}>
 		{label}
 	</button>
 );
