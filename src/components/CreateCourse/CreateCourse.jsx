@@ -3,7 +3,8 @@ import Button from '../../common/Button/Button';
 import TextArea from '../../common/TextArea/TextArea';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
+import { connect } from "react-redux";
 
 import { mockedAuthorsList } from '../Courses/components/Courses/mockedAuthorsList';
 
@@ -25,7 +26,7 @@ const textAreaStyle = {
 	height: '100px',
 };
 
-const CreateCourse = ({ stateChanger }) => {
+const CreateCourse = (props) => {
 	const [authorsToAdd] = useState(mockedAuthorsList);
 	const [authorsAdded] = useState([]);
 	const [inputAuthor, setinputAuthor] = useState('');
@@ -64,6 +65,7 @@ const CreateCourse = ({ stateChanger }) => {
 	);
 	let fullListItems;
 	let itemsAdd;
+	
 	function timeConvert(n) {
 		var num = n;
 		var hours = num / 60;
@@ -101,14 +103,19 @@ const CreateCourse = ({ stateChanger }) => {
 	}
 	const newCourse = [];
 	function createCourse() {
-		newCourse.push({
-			id: makeId(36),
-			title: inputCourseName,
-			description: inputCourseDes,
-			creationDate: dateToday(),
-			duration: inputDuration,
-			authors: authorsAdded,
+
+		props.dispatch({
+			type: "addCourse",
+			payload:{
+				authors: authorsAdded,
+				creationDate: dateToday(),
+				description: inputCourseDes,
+				duration: inputDuration,
+				id:  makeId(36),
+				title: inputCourseName
+			}
 		});
+		console.log(newCourse);
 	}
 	function createAuthor() {
 		console.log(fullListItems);
@@ -224,7 +231,8 @@ const CreateCourse = ({ stateChanger }) => {
 		);
 	}
 	return (
-		<div className='courseCreateStyle'>
+		<>
+		{props.token&&<div className='courseCreateStyle'>
 			<div className='marginLeftDiv'>
 				<Input
 					labelText='Title'
@@ -283,8 +291,17 @@ const CreateCourse = ({ stateChanger }) => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>}
+		{ !props.token&&<Redirect to="/login" />}
+		</>
 	);
 };
 
-export default CreateCourse;
+function mapStateToProps(state) {
+	return {
+	  token: state.user.token,
+	  authors: state.authors
+	};
+  }
+
+export default  connect(mapStateToProps)(CreateCourse);	

@@ -2,44 +2,76 @@ import Button from '../../../../common/Button/Button';
 import CourseCard from '../CourseCard/CourseCard';
 import SearchBar from '../SearchBar/SearchBar';
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from "react-redux";
+
 
 import './Courses.css';
 
-import { mockedCoursesList } from './mockedCoursesList';
-import { mockedAuthorsList } from './mockedAuthorsList';
+let active= true;
+const url = 'http://localhost:3000/courses/all';
 
-const Courses = ({ stateChanger, newCourse }) => {
-	const fullListItems = mockedCoursesList.map((t1) => ({
-		...t1,
-		...t1.authors.map((author) =>
-			mockedAuthorsList.find((t2) => t2.id === author)
-		),
-	}));
+const Courses = (props) => {
+	const getCourses = async()=>{
+		const response = await fetch(url);
+		const courses = await response.json();
+		if(courses.successful){
+			if(active){
+			courses.result.forEach(course => {
+                props.dispatch({
+                    type: "addCourse",
+                    payload:{
+                        authors: course.authors,
+                        creationDate: course.creationDate,
+                        description: course.description,
+                        duration: course.duration,
+                        id: course.id,
+						title: course.title
+                    }
+                });
+			});
+			active=false;
+		}
 
-	const listItems = fullListItems.map((course) => (
-		<CourseCard
-			key={course.id}
-			title={course.title}
-			description={course.description}
-			authors={course[0].name.toString() + ', ' + course[1].name.toString()}
-			duration={course.duration}
-			creationDate={course.creationDate}
-		></CourseCard>
-	));
-	const [courses] = useState(listItems);
+		}
+	}
+	useEffect(()=>{
+		getCourses();
+	},[]);
+
 	return (
-		<div className='courseStyle'>
-			<SearchBar />
-			<Link to="/courses/add">
-				<Button label='Add new course'/>
- 			</Link>
-	
-			
-			<ul>{courses}</ul>
-		</div>
+		<>
+ 			{props.token&&<div className='courseStyle'>
+					<SearchBar />
+					<Link to="/courses/add">
+						<Button label='Add new course'/>
+					</Link>
+					<ul> {  
+                        props.courses.map((course)=>{
+                            const {id,title,description,authors,duration,creationDate} = course;
+                            return <CourseCard
+                            key={id}
+                            id={id}
+                            title={title}
+                            description={description}
+                            authors={authors}
+                            duration={duration}
+                            creationDate={creationDate}
+                            />
+                        })}
+					</ul>
+				</div>}
+		{ !props.token&&<Redirect to="/login" />}
+		</>
 	);
 };
 
-export default Courses;
+function mapStateToProps(state) {
+	return {
+	  token: state.user.token,
+	  courses: state.courses
+	};
+  }
+
+export default  connect(mapStateToProps)(Courses);	
