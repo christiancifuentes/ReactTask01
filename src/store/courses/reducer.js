@@ -15,12 +15,7 @@ export default function reducer ( state = [], action){
 
             ];
         case actions.INIT_COURSE:
-            return [
-                ...state,
-                {
-                    course: action.payload.courses
-                }
-            ];
+            return action.payload;
         case actions.DELETE_COURSE:
             return state.filter(course => course.id !== action.payload.id);
         case actions.EDIT_COURSE:

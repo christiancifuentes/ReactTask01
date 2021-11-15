@@ -12,7 +12,8 @@ export default function reducer ( state = [], action){
             ];
         case actions.DELETE_AUTHOR:
             return state.filter(author => author.id !== action.payload.id);
-
+        case actions.INIT_AUTHOR:
+                return action.payload;
         default:
             return state;
     }

@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
  
 
   const Login = (props) => {
+
     let history = useHistory();
     const [name,setName] = useState([]);
     const [email,setEmail] = useState([]);

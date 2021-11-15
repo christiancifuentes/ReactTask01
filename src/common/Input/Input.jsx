@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ labelText, placeholder, onChange, name, id, style, className, type}) => (
+const Input = ({ labelText, placeholder, onChange, name, id, style, className, type, valueX}) => (
 	<>
 		<label for={labelText}>{labelText}</label>
 		<input
@@ -11,6 +11,7 @@ const Input = ({ labelText, placeholder, onChange, name, id, style, className, t
 			style={style}
 			onChange={onChange}
 			type={type}
+			value={valueX}
 		></input>
 	</>
 );

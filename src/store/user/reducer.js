@@ -7,15 +7,23 @@ export default function reducer ( state = {}, action){
                 
                     name: action.payload.name,
                     email: action.payload.email,
-                    token: action.payload.token
+                    token: action.payload.token,
+                    role: action.payload.role
                 
             };
+            case actions.LOG_ROLE:
+                return {
+                    ...state,
+                        role: action.payload.role
+                    
+                };
         case actions.LOG_OUT:
             return {
                 ...state, 
                 token: "",
                 name: "",
-                email: ""
+                email: "",
+                role: ""
             };
         default:
             return state;

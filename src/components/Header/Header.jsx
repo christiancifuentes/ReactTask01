@@ -5,9 +5,18 @@ import './Header.css';
 
 import { connect } from "react-redux";
 
+const url = "http://localhost:3000/logout";
 
 const Header = (props) => {
-	const logOut = () =>{
+
+	const logOut = async() =>{
+
+		const params = new URLSearchParams({
+			"Authorization": props.token
+		})
+
+		await fetch(url, {method: 'DELETE', body: JSON.stringify(params),  headers: {'Content-Type': 'application/json', 'Authorization': props.token}});
+
 		localStorage.setItem("token", "");
 		localStorage.setItem("name", "");
 		localStorage.setItem("email", "");
@@ -22,17 +31,18 @@ const Header = (props) => {
 		</div>
 
 		<div className='divContentRight'>
-			{props.name&&<Button label='Logout' onClick={logOut}/>}
+			{props.token&&<Button label='Logout' onClick={logOut}/>}
 		</div>
 		<div className='divContentRight'>
-			<h3>{props.name}</h3>
+			<h3>{props.email}</h3>
 		</div>
 	</div>
 )};
 
 function mapStateToProps(state) {
 	return {
-	  name: state.user.name
+		email: state.user.email,
+	  token: state.user.token
 	};
   }
 

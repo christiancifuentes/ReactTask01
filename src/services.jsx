@@ -20,3 +20,12 @@ export const useFetch = (url) =>{
   },[url]);
   return {loading,results};
 };
+
+export const course = "http://localhost:3000/courses/";
+export const course_all = "http://localhost:3000/courses/all";
+export const course_add = "http://localhost:3000/courses/add";
+
+export const userMe = 'http://localhost:3000/users/me';
+
+export const authors_all = 'http://localhost:3000/authors/all'
+export const author_add = 'http://localhost:3000/authors/add'

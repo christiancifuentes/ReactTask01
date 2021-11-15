@@ -1,10 +1,11 @@
 import Hearder from './components/Header/Header';
 import Courses from './components/Courses/components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CreateCourse';
 import RegistrationForm from './components/Registration/Registration';
 import LoginForm from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import Error from './components/Error/Error'
+import CourseForm from './components/CourseForm/ CourseForm';
+import PrivateRoute from './components/PrivateRouter/PrivateRouter';
 
 import {Route,Switch} from 'react-router-dom'
 
@@ -22,8 +23,10 @@ const App = () => {
 					<Route exact path="/registration" component={RegistrationForm}/>
 					<Route exact path="/login" component={LoginForm}/>
 					<Route exact path="/courses" component={Courses}/>
-					<Route exact path="/courses/add" component={CreateCourse}/>
+					<Route exact path="/courses/add" component={CourseForm} />
+					
 					<Route exact path="/courses/:id" component={CourseInfo}/>
+					<Route exact path="/courses/update/:id" component={CourseForm}/>
 					<Route path="*" component={Error}/>
 				</Switch>
 			</div>
