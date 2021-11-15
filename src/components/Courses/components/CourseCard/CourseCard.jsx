@@ -1,30 +1,29 @@
 import React from 'react';
 import Button from '../../../../common/Button/Button';
 import './CourseCard.css';
+import { deleteCourse } from '../../../../store/courses/actionCreators';
 
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+
 const CourseCard = (props) => {
+
 	let history = useHistory();
 	const showDetails = () =>{
 		history.push(`/courses/${props.id}`);
 	}
 
-	const deleteCourse = () =>{
-		props.dispatch({
-			type: "deleteCourse",
-			payload:{
-				id: props.id
-			}
-		});
+	const deleteCourseF = () =>{
+		props.dispatch(deleteCourse(props.id, props.token));
 	}
 
 	const editCourse = () =>{
-		history.push(`/courses/${props.id}`);
+		history.push(`/courses/update/${props.id}`);
 	}
 
 	return (
+		
 	<div className='courseCardDiv'>
 		<div className='divContentLeft'>
 			<h2>{props.title}</h2>
@@ -42,9 +41,13 @@ const CourseCard = (props) => {
 				<h2>Created: </h2> <h3>{props.creationDate}</h3>
 			</div>
 			<div className='divCenter'>
-			<Button label='Show Courses' onClick={showDetails}/>
-			<Button label='Delete' onClick={deleteCourse}/>
-			<Button label='Edit' onClick={editCourse}/>
+			{props.role === 'admin' ? (
+					<><Button label='Show Courses' onClick={showDetails}/>
+					<Button label='Delete' onClick={deleteCourseF}/>
+					<Button label='Edit' onClick={editCourse}/></>
+					) : (
+					<><Button label='Show Courses' onClick={showDetails}/></>
+				)}
 			</div>
 		</div>
 	</div>
@@ -53,7 +56,8 @@ const CourseCard = (props) => {
 
 function mapStateToProps(state) {
 	return {
-	  token: state.user.token
+	  token: state.user.token,
+	  role: state.user.role
 	};
   }
 
