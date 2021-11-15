@@ -1,37 +1,65 @@
 import React from 'react';
 import Button from '../../../../common/Button/Button';
-
 import './CourseCard.css';
+import { deleteCourse } from '../../../../store/courses/actionCreators';
 
-const CourseCard = ({
-	title,
-	description,
-	creationDate,
-	duration,
-	authors,
-}) => (
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+
+const CourseCard = (props) => {
+
+	let history = useHistory();
+	const showDetails = () =>{
+		history.push(`/courses/${props.id}`);
+	}
+
+	const deleteCourseF = () =>{
+		props.dispatch(deleteCourse(props.id, props.token));
+	}
+
+	const editCourse = () =>{
+		history.push(`/courses/update/${props.id}`);
+	}
+
+	return (
+		
 	<div className='courseCardDiv'>
 		<div className='divContentLeft'>
-			{title}
-			<p>{description}</p>
+			<h2>{props.title}</h2>
+			<p>{props.description}</p>
 		</div>
-
 		<div className='divContentCardRight'>
 			<div className='cardElement'>
 				<h2>Authors: </h2>
-				<h3>{authors}</h3>
+				<h3>{props.authors}</h3>
 			</div>
 			<div className='cardElement'>
-				<h2>Duration: </h2> <h3>{duration} hours</h3>
+				<h2>Duration: </h2> <h3>{props.duration} hours</h3>
 			</div>
 			<div className='cardElement'>
-				<h2>Created: </h2> <h3>{creationDate}</h3>
+				<h2>Created: </h2> <h3>{props.creationDate}</h3>
 			</div>
 			<div className='divCenter'>
-				<Button label='Show Courses' />
+			{props.role === 'admin' ? (
+					<><Button label='Show Courses' onClick={showDetails}/>
+					<Button label='Delete' onClick={deleteCourseF}/>
+					<Button label='Edit' onClick={editCourse}/></>
+					) : (
+					<><Button label='Show Courses' onClick={showDetails}/></>
+				)}
 			</div>
 		</div>
 	</div>
-);
+	);
+};
 
-export default CourseCard;
+function mapStateToProps(state) {
+	return {
+	  token: state.user.token,
+	  role: state.user.role
+	};
+  }
+
+
+export default  connect(mapStateToProps)(CourseCard);	

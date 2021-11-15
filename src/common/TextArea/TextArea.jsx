@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Input = ({
+	value,
 	labelText,
 	placeholder,
 	onChange,
@@ -10,6 +11,7 @@ const Input = ({
 	className,
 }) => (
 	<textarea
+		value={value}
 		placeholder={placeholder}
 		style={style}
 		onChange={onChange}
