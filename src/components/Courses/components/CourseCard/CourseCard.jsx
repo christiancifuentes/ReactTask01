@@ -1,21 +1,22 @@
 import React from 'react';
 import Button from '../../../../common/Button/Button';
 import './CourseCard.css';
-import { deleteCourse } from '../../../../store/courses/actionCreators';
+import {deleteCourseThunk} from '../../../../store/courses/thunk'
 
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 
 const CourseCard = (props) => {
 
 	let history = useHistory();
+	const dispatch = useDispatch();
 	const showDetails = () =>{
 		history.push(`/courses/${props.id}`);
 	}
 
 	const deleteCourseF = () =>{
-		props.dispatch(deleteCourse(props.id, props.token));
+		dispatch(deleteCourseThunk(props.id, props.token));
 	}
 
 	const editCourse = () =>{
@@ -23,25 +24,24 @@ const CourseCard = (props) => {
 	}
 
 	return (
-		
-	<div className='courseCardDiv'>
-		<div className='divContentLeft'>
-			<h2>{props.title}</h2>
-			<p>{props.description}</p>
+	<div className='courseCardDiv' data-testid='course-card' key={props.key}>
+		<div className='divContentLeft' >
+			<h2 data-testid='course-title'>{props.title}</h2>
+			<p data-testid='course-description'>{props.description}</p>
 		</div>
 		<div className='divContentCardRight'>
 			<div className='cardElement'>
 				<h2>Authors: </h2>
-				<h3>{props.authors}</h3>
+				<h3 data-testid='course-authors'>{props.authors}</h3>
 			</div>
 			<div className='cardElement'>
-				<h2>Duration: </h2> <h3>{props.duration} hours</h3>
+				<h2>Duration: </h2> <h3 data-testid='course-duration'>{props.duration} hours</h3>
 			</div>
 			<div className='cardElement'>
-				<h2>Created: </h2> <h3>{props.creationDate}</h3>
+				<h2>Created: </h2> <h3 data-testid='course-creation-date'>{props.creationDate}</h3>
 			</div>
 			<div className='divCenter'>
-			{props.role === 'admin' ? (
+			{props.courses && props.role === 'admin' ? (
 					<><Button label='Show Courses' onClick={showDetails}/>
 					<Button label='Delete' onClick={deleteCourseF}/>
 					<Button label='Edit' onClick={editCourse}/></>
@@ -57,7 +57,8 @@ const CourseCard = (props) => {
 function mapStateToProps(state) {
 	return {
 	  token: state.user.token,
-	  role: state.user.role
+	  role: state.user.role,
+	  courses: state.courses
 	};
   }
 

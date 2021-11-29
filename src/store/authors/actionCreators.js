@@ -1,33 +1,25 @@
 import * as actions from './actionTypes'
 import * as services from '../../services'
 
-export const addAuthor = (name, token) => async (dispatch) =>{
+export const addAuthor = async (name, token) => {
   const response = await fetch(services.AUTHORS_ADD, {method: 'POST',body: JSON.stringify(name), headers: {'Content-Type': 'application/json', 'Authorization': token}});
-  const info = await response.json();
-  console.log(info);
-  dispatch({ type: actions.ADD_AUTHOR,       
-    payload:{      
-      id: info.result.id,
-      name: info.result.name
-    }
-  });
+  return response.json();
 }
 
-export const deleteAuthor = id =>({
-    type: actions.DELETE_AUTHOR,
-    payload: {
-        id
-    }
-})
-
-export const initAuthors = () => async (dispatch) => {
+export const initAuthors = async () => {
   const response = await fetch(services.AUTHORS_ALL);
-  const authors = await response.json();
-  if(authors.successful){
-    dispatch({
-        type: actions.INIT_AUTHOR,
-        payload:
-          authors.result   
-    });
-  }
+  return response.json();
 }
+
+export const fetchAuthorsAction = (authors) => ({
+	type: actions.INIT_AUTHOR,
+	payload: authors,
+});
+
+export const addAuthorAction = (author) => ({
+	type: actions.ADD_AUTHOR,
+  payload:{      
+    id: author.id,
+    name: author.name
+  }
+});

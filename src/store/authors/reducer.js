@@ -1,5 +1,5 @@
 import * as actions from './actionTypes';
-export default function reducer ( state = [], action){
+const authorsReducer = (state = [], action) => {
     switch (action.type) {
         case actions.ADD_AUTHOR:
             return [
@@ -18,3 +18,5 @@ export default function reducer ( state = [], action){
             return state;
     }
 }
+
+export default authorsReducer;

@@ -1,18 +1,22 @@
  import React from 'react'
  import Button from '../../common/Button/Button';
  import Input from '../../common/Input/Input';
- import { login } from '../../store/user/actionCreators';
+ import {loginUserThunk} from '../../store/user/thunk' 
  import '../Registration/Registration';
 
 import { useState } from 'react';
 import { connect, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom"; 
+import { useHistory, Redirect } from "react-router-dom"; 
 
   const Login = (props) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const [email,setEmail] = useState([]);
     const [password,setPassword] = useState([]);
+
+    if (props.token) {
+      return <Redirect to='/courses' />;
+    }
 
     const handleChangePassword = (event) =>{
       setPassword(event.target.value);
@@ -23,7 +27,7 @@ import { useHistory } from "react-router-dom";
     }
 
     const handleSubmit = () => {
-      dispatch(login(email,password,history));
+      dispatch(loginUserThunk(email,password,history));
     }
 
      return (
@@ -52,6 +56,12 @@ import { useHistory } from "react-router-dom";
          </div>
      );
    }
-
-  export default  connect(null)(Login);	
+   function mapStateToProps(state) {
+    return {
+      email: state.user.email,
+      token: state.user.token
+    };
+    }
+  
+  export default  connect(mapStateToProps)(Login);	
    

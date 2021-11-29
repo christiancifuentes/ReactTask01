@@ -1,5 +1,6 @@
 import * as actions from './actionTypes';
-export default function reducer ( state = [], action){
+
+const coursesReducer = (state = [], action) => {
     switch (action.type) {
         case actions.ADD_COURSE:
             return [
@@ -32,3 +33,4 @@ export default function reducer ( state = [], action){
             return state;
     }
 }
+export default coursesReducer;

@@ -1,11 +1,12 @@
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import TextArea from '../../common/TextArea/TextArea';
-import { addCourse, edit } from '../../store/courses/actionCreators';
-import { addAuthor, initAuthors } from '../../store/authors/actionCreators';
+
+import { addCourseThunk, updateCourseThunk } from '../../store/courses/thunk';
+import { addAuthorThunk } from '../../store/authors/thunk';
 
 import { connect, useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, Redirect, useParams} from 'react-router-dom';
 
 import './CourseForm.css';
@@ -29,13 +30,9 @@ const textAreaStyle = {
 const _ = require("lodash");
 
 const CourseForm = (props) => {
+
 	const dispatch = useDispatch();
-	const getCourses = ()=>{
-		dispatch(initAuthors());
-	}
-	useEffect(()=>{
-		getCourses();
-	},[]);
+
 	const id = useParams().id;
 	const [currentCourse] = useState(props.courses.filter(course => course.id === id))
 	const [authorsToAdd, setauthorsToAdd] = useState(props.authors);
@@ -71,7 +68,7 @@ const CourseForm = (props) => {
 			"duration": inputDurationNumber,
 			"authors": authorsCreate
 		 };
-		 dispatch(addCourse(newCourse,props.token));
+		 dispatch(addCourseThunk(newCourse,props.token));
 	}
 
 	const editCourse = () =>{
@@ -81,15 +78,14 @@ const CourseForm = (props) => {
 			"duration": inputDurationNumber,
 			"authors": authorsAdded
 		 };
-		 dispatch(edit(newCourse, currentCourse[0].id, props.token));
+		 dispatch(updateCourseThunk(newCourse, currentCourse[0].id, props.token));
 	}
-
 
 	function createAuthor() {
 		const author = {
 			name :inputAuthor
 		}
-		dispatch(addAuthor(author,props.token));
+		dispatch(addAuthorThunk(author,props.token));
 	}
 	function deleteAuthor(id) {
 		let newValue = authorsAdded.filter((item) => item.id === id);
@@ -102,7 +98,7 @@ const CourseForm = (props) => {
 		setauthorsToAdd(authorsToAdd.filter((item) => item.id !== id));	
 	}
 	return (
-		<>
+		<div data-testid='course-form-section'>
 		{props.token&&<div className='courseCreateStyle'>
 			<div className='marginLeftDiv'>
 				<Input
@@ -135,7 +131,7 @@ const CourseForm = (props) => {
 				<div className='divContentRightAuthor'>
 					<h2 className='hearderCenter'>Authors</h2>
 					{props.authors ? (<div>{authorsToAdd.map(author =>{
-								return <div>
+								return <div key={author.id}>
 											<div key={author.id}>
 												<h3>{author.name}</h3>
 											</div>
@@ -150,9 +146,9 @@ const CourseForm = (props) => {
 									<div className='hearderCenter'>Author list is empty</div>
 								)}
 					<h4 className='hearderCenter'>Course authors</h4>
-					<div>
+					<div data-testid='authors-list-component'>
 						{props.authors ? (
-							<div>{authorsAdded.map(author =>{
+							<div data-testid='available-authors-list' >{authorsAdded.map(author =>{
 								return <div>
 											<div key={author.id}>
 												<h3>{author.name}</h3>
@@ -201,7 +197,7 @@ const CourseForm = (props) => {
 			</div>
 		</div>}
 		{ !props.token&&<Redirect to="/login" />}
-		</>
+		</div>
 	);
 };
 

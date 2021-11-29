@@ -1,51 +1,54 @@
 import * as actions from './actionTypes'
 import * as services from '../../services'
 
-export const addCourse = (course, token) => async (dispatch) =>{
-  const response = await fetch(services.COURSE_ADD, {method: 'POST',body: JSON.stringify(course), headers: {'Content-Type': 'application/json', 'Authorization': token}});
-  const info = await response.json();
-  console.log(info);
-  dispatch({ type: actions.ADD_COURSE,       
-    payload:{
-      authors: info.result.authors,
-      creationDate: info.result.creationDate,
-      description: info.result.description,
-      duration: info.result.duration,
-      id: info.result.id,
-      title: info.result.title
-    }
-  });
-}
-
-export const initCourse = () => async (dispatch) => {
+export const initCourse = async () => {
   const response = await fetch(services.COURSE_ALL);
   const courses = await response.json();
   if(courses.successful){
-    dispatch({
-        type: actions.INIT_COURSE,
-        payload:
-          courses.result   
-    });
+    return courses.result;
+  }else{
+    return 0;
   }
-}
-
-export const deleteCourse = (id,token) => async (dispatch) => {
-	const responseid = await fetch(services.COURSE+id, {method: 'DELETE', headers: {'Content-Type': 'application/json','Authorization': token}});
-	const infoid = await responseid.json();
-	console.log(infoid);
-  dispatch({ type: actions.DELETE_COURSE, payload: {id} });
 };
 
-export const edit = (course,id,token) => async (dispatch) =>{
-	const responseid = await fetch(services.COURSE+id, {method: 'PUT',body: JSON.stringify(course), headers: {'Content-Type': 'application/json','Authorization': token}});
-	const infoid = await responseid.json();
-	console.log(infoid);
-  dispatch({ type: actions.EDIT_COURSE, payload: {id} });
+export const addCourse = async (course, token) => {
+  const response = await fetch(services.COURSE_ADD, {method: 'POST',body: JSON.stringify(course), headers: {'Content-Type': 'application/json', 'Authorization': token}});
+  return response.json();
 };
 
-export const getCourse = (id,token) => async (dispatch) =>{
-	const responseid = await fetch(services.COURSE+id, {method: 'GET', headers: {'Content-Type': 'application/json','Authorization': token}});
-	const infoid = await responseid.json();
-	console.log(infoid);
-  dispatch({ type: actions.GET_COURSE, payload: {id} });
+export const edit = async (course,id,token) => {
+	const response = await fetch(services.COURSE+id, {method: 'PUT',body: JSON.stringify(course), headers: {'Content-Type': 'application/json','Authorization': token}});
+  return response;
 };
+
+export const deleteCourse = async (id,token) => {
+	await fetch(services.COURSE+id, {method: 'DELETE', headers: {'Content-Type': 'application/json','Authorization': token}});
+	return id
+};
+
+export const fetchCoursesAction = (courses) => ({
+	type: actions.INIT_COURSE,
+	payload: courses,
+});
+
+export const updateCourseAction = (id) => ({
+	type: actions.EDIT_COURSE,
+	payload: {id},
+});
+
+export const addCourseAction = (info) => ({
+	type: actions.ADD_COURSE,
+  payload:{
+    authors: info.authors,
+    creationDate: info.creationDate,
+    description: info.description,
+    duration: info.duration,
+    id: info.id,
+    title: info.title
+  }
+});
+
+export const deleteCourseAction = (courseId) => ({
+	type: actions.DELETE_COURSE,
+	payload: courseId,
+});

@@ -1,23 +1,11 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from "redux-devtools-extension";
-import ReduxTrunk from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunkMiddleware from 'redux-thunk';
+import rootReducer from './reducer'
 
-import authors from './authors/reducer'
-import courses from './courses/reducer'
-import user from './user/reducer'
+const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-const rootReducer = combineReducers({
-    authors,
-    courses,
-    user
-  });
-
-const middleware = [ReduxTrunk]
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools (applyMiddleware(...middleware))
-  );
+const store = createStore(rootReducer, composedEnhancer);
 
 export default store;
 
