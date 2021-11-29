@@ -41,9 +41,6 @@
               'Content-Type': 'application/json',
         },
       }).then((result) => {
-        console.log(result);
-        console.log(result.json());
-
           if(result.status=='201'){
             alert('User created successfully!');
             this.props.history.push('/login')

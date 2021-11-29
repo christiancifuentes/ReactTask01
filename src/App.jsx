@@ -4,7 +4,7 @@ import RegistrationForm from './components/Registration/Registration';
 import LoginForm from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import Error from './components/Error/Error'
-import CourseForm from './components/CourseForm/ CourseForm';
+import CourseForm from './components/CourseForm/CourseForm';
 import PrivateRoute from './components/PrivateRouter/PrivateRouter';
 
 import {Route,Switch} from 'react-router-dom'

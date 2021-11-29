@@ -21,11 +21,14 @@ export const useFetch = (url) =>{
   return {loading,results};
 };
 
-export const course = "http://localhost:3000/courses/";
-export const course_all = "http://localhost:3000/courses/all";
-export const course_add = "http://localhost:3000/courses/add";
+export const LOG_OUT = "http://localhost:3000/logout";
+export const LOGIN  = "http://localhost:3000/login";
 
-export const userMe = 'http://localhost:3000/users/me';
+export const COURSE = "http://localhost:3000/courses/";
+export const COURSE_ALL = "http://localhost:3000/courses/all";
+export const COURSE_ADD = "http://localhost:3000/courses/add";
 
-export const authors_all = 'http://localhost:3000/authors/all'
-export const author_add = 'http://localhost:3000/authors/add'
+export const USER_ME = 'http://localhost:3000/users/me';
+
+export const AUTHORS_ALL = 'http://localhost:3000/authors/all'
+export const AUTHORS_ADD = 'http://localhost:3000/authors/add'

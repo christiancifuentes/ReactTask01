@@ -1,5 +1,5 @@
 import * as actions from './actionTypes';
-export default function reducer ( state = {}, action){
+const userReducer = ( state = {token: localStorage.getItem('token') || ''},action) => {
     switch (action.type) {
         case actions.LOGIN:
             return {
@@ -29,3 +29,4 @@ export default function reducer ( state = {}, action){
             return state;
     }
 }
+export default userReducer;

@@ -1,23 +1,22 @@
  import React from 'react'
  import Button from '../../common/Button/Button';
  import Input from '../../common/Input/Input';
+ import {loginUserThunk} from '../../store/user/thunk' 
  import '../Registration/Registration';
 
 import { useState } from 'react';
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-
-
- const url = "http://localhost:3000/login";
- 
+import { connect, useDispatch } from "react-redux";
+import { useHistory, Redirect } from "react-router-dom"; 
 
   const Login = (props) => {
-
+    const dispatch = useDispatch();
     let history = useHistory();
-    const [name,setName] = useState([]);
     const [email,setEmail] = useState([]);
     const [password,setPassword] = useState([]);
-    const [token,setToken] = useState([]);
+
+    if (props.token) {
+      return <Redirect to='/courses' />;
+    }
 
     const handleChangePassword = (event) =>{
       setPassword(event.target.value);
@@ -27,34 +26,10 @@ import { useHistory } from "react-router-dom";
       setEmail(event.target.value);
     }
 
-	const handleSubmit = async()=>{
-
-    const newUser = {
-      "email":email,
-      "password":password,
-   };
-     
-		const response = await fetch(url, {method: 'POST',body: JSON.stringify(newUser), headers: {'Content-Type': 'application/json'}});
-		const info = await response.json();
-		if(info.successful){
-			setToken(info.result);
-      setName(info.user.name);
-      localStorage.setItem("token", info.result);
-      localStorage.setItem("name", info.user.name);
-      localStorage.setItem("email", info.user.email);
-      props.dispatch({
-        type: "login",
-        payload:{
-          name: info.user.name,
-          email: info.user.email,
-          token: info.result
-        }
-      });
-      history.push(`/courses/`);
-		}else{
-      alert('LOGIN ERROR!');
+    const handleSubmit = () => {
+      dispatch(loginUserThunk(email,password,history));
     }
-	}
+
      return (
        <div className='registrationDivStyle'>
            <h2>Login</h2>
@@ -81,6 +56,12 @@ import { useHistory } from "react-router-dom";
          </div>
      );
    }
-
-   export default  connect(null)(Login);	
- 
+   function mapStateToProps(state) {
+    return {
+      email: state.user.email,
+      token: state.user.token
+    };
+    }
+  
+  export default  connect(mapStateToProps)(Login);	
+   

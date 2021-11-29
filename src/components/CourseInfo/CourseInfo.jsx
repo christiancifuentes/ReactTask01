@@ -12,7 +12,6 @@ const url = "http://localhost:3000/courses/";
 const CourseInfo = (props)=>{
     const id = useParams().id;
     const {results} = useFetch(url+id);
-    console.log(results);
 
     let history = useHistory();
 	const  backCourses = () => {

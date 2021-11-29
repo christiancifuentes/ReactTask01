@@ -20,7 +20,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 ) ;
 
 function mapStateToProps(state) {
-  console.log(state.user.role)
 	return {
 	  role: state.user.role,
 	};
